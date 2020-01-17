@@ -42,4 +42,8 @@ class ReminderApp : Application() {
   }
 
   fun getRepository() = repository
+
+  companion object {
+    const val TAG = "RemindMe"
+  }
 }

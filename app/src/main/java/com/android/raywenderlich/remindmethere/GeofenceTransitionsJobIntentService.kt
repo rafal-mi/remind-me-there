@@ -40,7 +40,7 @@ import com.google.android.gms.location.GeofencingEvent
 class GeofenceTransitionsJobIntentService : JobIntentService() {
 
   companion object {
-    private const val LOG_TAG = "GeoTrIntentService"
+    const val TAG = ReminderApp.TAG
 
     private const val JOB_ID = 573
 
@@ -57,7 +57,7 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
     if (geofencingEvent.hasError()) {
       val errorMessage = GeofenceErrorMessages.getErrorString(this,
           geofencingEvent.errorCode)
-      Log.e(LOG_TAG, errorMessage)
+      Log.e(TAG, errorMessage)
       return
     }
 
@@ -70,6 +70,8 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
       val message = reminder?.message
       val latLng = reminder?.latLng
       if (message != null && latLng != null) {
+        var mesg = "Geofence entered with message $message"
+        Log.d(TAG, message)
         sendNotification(this, message, latLng)
       }
     }
@@ -79,4 +81,5 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
     val firstGeofence = triggeringGeofences[0]
     return (application as ReminderApp).getRepository().get(firstGeofence.requestId)
   }
+
 }
