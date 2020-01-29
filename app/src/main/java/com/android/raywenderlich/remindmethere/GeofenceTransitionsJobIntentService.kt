@@ -67,11 +67,13 @@ class GeofenceTransitionsJobIntentService : JobIntentService() {
   private fun handleEvent(event: GeofencingEvent) {
     if (event.geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
       val reminder = getFirstReminder(event.triggeringGeofences)
+      var mesg = "Geofence entered with reminder $reminder"
+      Log.d(TAG, mesg)
       val message = reminder?.message
       val latLng = reminder?.latLng
       if (message != null && latLng != null) {
         var mesg = "Geofence entered with message $message"
-        Log.d(TAG, message)
+        Log.d(TAG, mesg)
         sendNotification(this, message, latLng)
       }
     }
